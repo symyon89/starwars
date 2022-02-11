@@ -1,6 +1,6 @@
 package com.starwars.controller;
 
-import com.starwars.model.Root;
+import com.starwars.model.Film;
 import com.starwars.service.FilmService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +22,11 @@ public class FilmController {
     }
 
     @GetMapping
-    public ResponseEntity<Flux<Root>> getFilms(
-            @RequestParam(required = false) String search,
-            @RequestParam(required =false) String page
+    public ResponseEntity<Flux<Film>> getFilms(
+            @RequestParam(required = false, defaultValue = "") String search,
+            @RequestParam(required =false, defaultValue = "") String page,
+            @RequestParam(required =false, defaultValue = "") String format
     ) {
-        return new ResponseEntity<>(filmService.getFilms(search,page), HttpStatus.OK);
+        return new ResponseEntity<>(filmService.getFilms(search,page,format), HttpStatus.OK);
     }
 }
