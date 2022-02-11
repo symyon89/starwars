@@ -1,15 +1,11 @@
 package com.starwars.service;
 
-import com.starwars.model.Film;
 import com.starwars.model.Root;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-
-import java.util.List;
 
 @Service
 public class FilmService {
@@ -23,24 +19,25 @@ public class FilmService {
                 .build();
     }
 
-    public Flux<Root> getFilms(int startPage, int rowsPerPage, String search) {
-        var result = builder
+    public Flux<Root> getFilms(String search, String page) {
+        return builder
                 .get()
-                .uri("/films?search=" + search)
+                .uri(createUri(search,page))
                 .retrieve()
                 .bodyToFlux(Root.class);
-        if (rowsPerPage > 0) {
-            return Flux.fromIterable(result.collectList().block().stream().skip(startPage*rowsPerPage).limit(rowsPerPage).toList());
+    }
+
+    private String createUri(String search, String page) {
+        String result = "/films";
+        if (search != null && page == null) {
+            result = "/films/?search=" + search;
+        } else if (search == null && page != null) {
+            result = "/films/?page=" + page;
+        } else if (search != null && page != null) {
+            result = "/films/?search=" + search + "&page=" + page;
         }
         return result;
     }
-//    public Mono<List<Root>> dosomething() {
-//        for (Root root : this.getFilms().block()) {
-//            System.out.println(root.results);
-//            System.out.println();
-//        }
-//        return getFilms();
-//
-//    }
+
 
 }
