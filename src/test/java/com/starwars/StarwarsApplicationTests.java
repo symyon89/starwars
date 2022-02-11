@@ -30,10 +30,10 @@ class StarwarsApplicationTests {
 
     @Test
     void contextLoads() {
-        doReturn(webClient)
+        doReturn(webClient);
         doReturn(Flux.fromArray(new Film[])).when(webClient).get().uri("any(").retrieve().bodyToFlux(Root.class);
 
-        new FilmService(builder)
+        new FilmService(builder);
     }
 
 }
