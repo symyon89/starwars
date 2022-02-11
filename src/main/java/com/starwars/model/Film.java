@@ -1,31 +1,25 @@
 package com.starwars.model;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.ToString;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Date;
 
-
-@Getter
-@Setter
-public class Film {
-
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<>();
-
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
-
+@ToString
+public class Film{
+    public String title;
+    public int episode_id;
+    public String opening_crawl;
+    public String director;
+    public String producer;
+    public String release_date;
+    public ArrayList<String> characters;
+    public ArrayList<String> planets;
+    public ArrayList<String> starships;
+    public ArrayList<String> vehicles;
+    public ArrayList<String> species;
+    public Date created;
+    public Date edited;
+    public String url;
 }
+
