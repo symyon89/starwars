@@ -1,5 +1,6 @@
 package com.starwars.service;
 
+import com.starwars.model.Person;
 import com.starwars.model.Planet;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -13,18 +14,23 @@ public class PlanetService {
         this.builder = builder;
     }
 
-    public Flux<Planet> getPlanets(String search, String page, String format) {
+    public Flux<Planet.Root> getPlanets(String search, String page) {
         return builder
                 .get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/planets/")
                         .queryParam("page", page)
                         .queryParam("search", search)
-                        //.queryParam("format", format)
                         .build())
                 .retrieve()
-                .bodyToFlux(Planet.Root.class)
-                .flatMap(person -> Flux.fromStream(person.results.stream()));
+                .bodyToFlux(Planet.Root.class);
+    }
 
+    public Flux<Planet> getPlanetById(String id) {
+        return builder
+                .get()
+                .uri("/planets/" + id + "/")
+                .retrieve()
+                .bodyToFlux(Planet.class);
     }
 }

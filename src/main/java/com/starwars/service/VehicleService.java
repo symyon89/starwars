@@ -1,5 +1,6 @@
 package com.starwars.service;
 
+import com.starwars.model.Starship;
 import com.starwars.model.Vehicle;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -13,17 +14,22 @@ public class VehicleService {
         this.builder = builder;
     }
 
-    public Flux<Vehicle> getVehicles(String search, String page, String format) {
+    public Flux<Vehicle.Root> getVehicles(String search, String page) {
         return builder
                 .get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/starships/")
+                        .path("/vehicles/")
                         .queryParam("page", page)
                         .queryParam("search", search)
-                        //.queryParam("format", format)
                         .build())
                 .retrieve()
-                .bodyToFlux(Vehicle.Root.class)
-                .flatMap(person -> Flux.fromStream(person.results.stream()));
+                .bodyToFlux(Vehicle.Root.class);
+    }
+    public Flux<Vehicle> getVehicleById(String id) {
+        return builder
+                .get()
+                .uri("/vehicles/" + id + "/")
+                .retrieve()
+                .bodyToFlux(Vehicle.class);
     }
 }

@@ -4,10 +4,7 @@ import com.starwars.model.Film;
 import com.starwars.service.FilmService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
 
@@ -22,11 +19,15 @@ public class FilmController {
     }
 
     @GetMapping
-    public ResponseEntity<Flux<Film>> getFilms(
+    public ResponseEntity<Flux<Film.Root>> getFilms(
             @RequestParam(required = false, defaultValue = "") String search,
-            @RequestParam(required =false, defaultValue = "") String page,
-            @RequestParam(required =false, defaultValue = "") String format
+            @RequestParam(required =false, defaultValue = "") String page
     ) {
-        return new ResponseEntity<>(filmService.getFilms(search,page,format), HttpStatus.OK);
+        return new ResponseEntity<>(filmService.getFilms(search,page), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Flux<Film>> getFilmById(@PathVariable("id") String id) {
+        return new ResponseEntity<>(filmService.getFilmById(id), HttpStatus.OK);
     }
 }

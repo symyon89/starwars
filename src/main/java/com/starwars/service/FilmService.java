@@ -15,19 +15,24 @@ public class FilmService {
     }
 
 
-    public Flux<Film> getFilms(String search, String page, String format) {
+    public Flux<Film.Root> getFilms(String search, String page) {
         return builder
                 .get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/films/")
                         .queryParam("page", page)
                         .queryParam("search", search)
-                        //.queryParam("format", format)
                         .build())
                 .retrieve()
-                .bodyToFlux(Film.Root.class)
-                .flatMap(person -> Flux.fromStream(person.results.stream()));
+                .bodyToFlux(Film.Root.class);
+    }
 
+    public Flux<Film> getFilmById(String id) {
+        return builder
+                .get()
+                .uri("/films/" + id + "/")
+                .retrieve()
+                .bodyToFlux(Film.class);
     }
 
 

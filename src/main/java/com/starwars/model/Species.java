@@ -1,38 +1,67 @@
 package com.starwars.model;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.starwars.service.BaseUrlMapper;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-
+@Getter
+@Setter
 public class Species {
-    public String name;
-    public String classification;
-    public String designation;
+    private String name;
+    private String classification;
+    private String designation;
     @JsonSetter("average_height")
-    public String averageHeight;
+    private String averageHeight;
     @JsonSetter("skin_colors")
-    public String skinColors;
+    private String skinColors;
     @JsonSetter("hair_colors")
-    public String hairColors;
+    private String hairColors;
     @JsonSetter("eye_colors")
-    public String eyeColors;
+    private String eyeColors;
     @JsonSetter("average_lifespan")
-    public String averageLifespan;
-    public String homeworld;
-    public String language;
-    public ArrayList<String> people;
-    public ArrayList<String> films;
-    public Date created;
-    public Date edited;
-    public String url;
+    private String averageLifespan;
+    private String homeworld;
+    private String language;
+    private List<String> people;
+    private List<String> films;
+    private Date created;
+    private Date edited;
+    private String url;
 
+    public void setHomeworld(String homeworld) {
+        this.homeworld = BaseUrlMapper.mapToBaseUrl(homeworld);
+    }
 
+    public void setPeople(List<String> people) {
+        this.people = BaseUrlMapper.mapArrayToBaseUrl(people);
+    }
+
+    public void setFilms(List<String> films) {
+        this.films = BaseUrlMapper.mapArrayToBaseUrl(films);
+    }
+
+    public void setUrl(String url) {
+        this.url = BaseUrlMapper.mapToBaseUrl(url);
+    }
+
+    @Getter
+    @Setter
     public static class Root {
-        public int count;
-        public String next;
-        public Object previous;
-        public ArrayList<Species> results;
+        private int count;
+        private String next;
+        private String previous;
+        private List<Species> results;
+
+        public void setNext(String next) {
+            this.next = BaseUrlMapper.mapToBaseUrl(next);
+        }
+
+        public void setPrevious(String previous) {
+            this.previous = BaseUrlMapper.mapToBaseUrl(previous);
+        }
     }
 }

@@ -1,36 +1,61 @@
 package com.starwars.model;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.starwars.service.BaseUrlMapper;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-
+@Getter
+@Setter
 public class Planet {
-    public String name;
+    private String name;
     @JsonSetter("rotation_period")
-    public String rotationPeriod;
+    private String rotationPeriod;
     @JsonSetter("orbital_period")
-    public String orbitalPeriod;
-    public String diameter;
-    public String climate;
-    public String gravity;
-    public String terrain;
+    private String orbitalPeriod;
+    private String diameter;
+    private String climate;
+    private String gravity;
+    private String terrain;
     @JsonSetter("surface_water")
-    public String surfaceWater;
-    public String population;
-    public ArrayList<String> residents;
-    public ArrayList<String> films;
-    public Date created;
-    public Date edited;
-    public String url;
+    private String surfaceWater;
+    private String population;
+    private List<String> residents;
+    private List<String> films;
+    private Date created;
+    private Date edited;
+    private String url;
 
+    public void setResidents(List<String> residents) {
+        this.residents = BaseUrlMapper.mapArrayToBaseUrl(residents);
+    }
 
+    public void setFilms(List<String> films) {
+        this.films = BaseUrlMapper.mapArrayToBaseUrl(films);
+    }
+
+    public void setUrl(String url) {
+        this.url = BaseUrlMapper.mapToBaseUrl(url);
+    }
+
+    @Getter
+    @Setter
     public static class Root {
-        public int count;
-        public String next;
-        public Object previous;
-        public ArrayList<Planet> results;
+        private int count;
+        private String next;
+        private String previous;
+        private List<Planet> results;
+
+        public void setNext(String next) {
+            this.next = BaseUrlMapper.mapToBaseUrl(next);
+        }
+
+        public void setPrevious(String previous) {
+            this.previous = BaseUrlMapper.mapToBaseUrl(previous);
+        }
     }
 
 }
