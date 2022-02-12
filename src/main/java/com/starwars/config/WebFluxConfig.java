@@ -1,6 +1,5 @@
 package com.starwars.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -12,9 +11,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class WebFluxConfig {
 
     @Bean
-    public WebClient getWebClient(@Value("${spring.webflux.base-path}") String baseUrl) {
+    public WebClient getWebClient() {
         return WebClient.builder()
-                .baseUrl(baseUrl)
+                .baseUrl("https://swapi.dev/api/")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
     }

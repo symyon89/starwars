@@ -1,9 +1,13 @@
 package com.starwars.service;
 
+import com.starwars.exceptions.PageNotFoundException;
+import com.starwars.exceptions.ServerException;
 import com.starwars.model.Film;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class FilmService {
@@ -19,19 +23,23 @@ public class FilmService {
         return builder
                 .get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/films/")
+                        .path("/filmss/")
                         .queryParam("page", page)
                         .queryParam("search", search)
                         .build())
                 .retrieve()
+                .onStatus(HttpStatus::is5xxServerError,clientResponse ->  Mono.just(new ServerException("Error 500")))
+                .onStatus(HttpStatus::is4xxClientError, clientResponse ->  Mono.just(new PageNotFoundException("Error 400")))
                 .bodyToFlux(Film.Root.class);
     }
 
-    public Flux<Film> getFilmById(String id) {
+    public Flux<Film> getFilmById(String id)  {
         return builder
                 .get()
                 .uri("/films/" + id + "/")
                 .retrieve()
+                .onStatus(HttpStatus::is5xxServerError,clientResponse ->  Mono.just(new ServerException("Error 500")))
+                .onStatus(HttpStatus::is4xxClientError, clientResponse ->  Mono.just(new PageNotFoundException("Error 400")))
                 .bodyToFlux(Film.class);
     }
 

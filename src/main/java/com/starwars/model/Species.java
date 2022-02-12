@@ -1,7 +1,8 @@
 package com.starwars.model;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.starwars.service.BaseUrlMapper;
+import com.starwars.mapper.BaseUrlMapper;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,21 +32,24 @@ public class Species {
     private Date created;
     private Date edited;
     private String url;
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private final BaseUrlMapper mapper = new BaseUrlMapper();
 
     public void setHomeworld(String homeworld) {
-        this.homeworld = BaseUrlMapper.mapToBaseUrl(homeworld);
+        this.homeworld = mapper.mapToBaseUrl(homeworld);
     }
 
     public void setPeople(List<String> people) {
-        this.people = BaseUrlMapper.mapArrayToBaseUrl(people);
+        this.people = mapper.mapArrayToBaseUrl(people);
     }
 
     public void setFilms(List<String> films) {
-        this.films = BaseUrlMapper.mapArrayToBaseUrl(films);
+        this.films = mapper.mapArrayToBaseUrl(films);
     }
 
     public void setUrl(String url) {
-        this.url = BaseUrlMapper.mapToBaseUrl(url);
+        this.url = mapper.mapToBaseUrl(url);
     }
 
     @Getter
@@ -55,13 +59,16 @@ public class Species {
         private String next;
         private String previous;
         private List<Species> results;
+        @Getter(AccessLevel.NONE)
+        @Setter(AccessLevel.NONE)
+        private final BaseUrlMapper mapper = new BaseUrlMapper();
 
         public void setNext(String next) {
-            this.next = BaseUrlMapper.mapToBaseUrl(next);
+            this.next = mapper.mapToBaseUrl(next);
         }
 
         public void setPrevious(String previous) {
-            this.previous = BaseUrlMapper.mapToBaseUrl(previous);
+            this.previous = mapper.mapToBaseUrl(previous);
         }
     }
 }

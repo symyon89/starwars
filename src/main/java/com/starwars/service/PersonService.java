@@ -1,10 +1,13 @@
 package com.starwars.service;
 
-import com.starwars.model.Film;
+import com.starwars.exceptions.PageNotFoundException;
+import com.starwars.exceptions.ServerException;
 import com.starwars.model.Person;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class PersonService {
@@ -23,7 +26,10 @@ public class PersonService {
                         .queryParam("page", page)
                         .queryParam("search", search)
                         .build())
+
                 .retrieve()
+                .onStatus(HttpStatus::is5xxServerError,clientResponse ->  Mono.just(new ServerException("Error 500")))
+                .onStatus(HttpStatus::is4xxClientError, clientResponse ->  Mono.just(new PageNotFoundException("Error 400")))
                 .bodyToFlux(Person.Root.class);
 
     }
@@ -33,6 +39,8 @@ public class PersonService {
                 .get()
                 .uri("/people/" + id + "/")
                 .retrieve()
+                .onStatus(HttpStatus::is5xxServerError,clientResponse ->  Mono.just(new ServerException("Error 500")))
+                .onStatus(HttpStatus::is4xxClientError, clientResponse ->  Mono.just(new PageNotFoundException("Error 400")))
                 .bodyToFlux(Person.class);
     }
 }

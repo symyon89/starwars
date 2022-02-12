@@ -19,15 +19,16 @@ public class FilmController {
     }
 
     @GetMapping
-    public ResponseEntity<Flux<Film.Root>> getFilms(
+    public Flux<Film.Root> getFilms(
             @RequestParam(required = false, defaultValue = "") String search,
-            @RequestParam(required =false, defaultValue = "") String page
+            @RequestParam(required = false, defaultValue = "") String page
     ) {
-        return new ResponseEntity<>(filmService.getFilms(search,page), HttpStatus.OK);
+        return filmService.getFilms(search,page);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Flux<Film>> getFilmById(@PathVariable("id") String id) {
-        return new ResponseEntity<>(filmService.getFilmById(id), HttpStatus.OK);
+    public Flux<Film> getFilmById(@PathVariable("id") String id) {
+
+        return filmService.getFilmById(id);
     }
 }

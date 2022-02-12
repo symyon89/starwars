@@ -2,8 +2,6 @@ package com.starwars.controller;
 
 import com.starwars.model.Planet;
 import com.starwars.service.PlanetService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
@@ -18,16 +16,16 @@ public class PlanetController {
     }
 
     @GetMapping
-    public ResponseEntity<Flux<Planet.Root>> getPlanets(
+    public Flux<Planet.Root> getPlanets(
             @RequestParam(required = false, defaultValue = "") String search,
             @RequestParam(required = false, defaultValue = "") String page
     ) {
-        return new ResponseEntity<>(planetService.getPlanets(search, page), HttpStatus.OK);
+        return planetService.getPlanets(search, page);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Flux<Planet>> getPlanetById(@PathVariable("id") String id) {
-        return new ResponseEntity<>(planetService.getPlanetById(id), HttpStatus.OK);
+    public Flux<Planet> getPlanetById(@PathVariable("id") String id) {
+        return planetService.getPlanetById(id);
     }
 
 }

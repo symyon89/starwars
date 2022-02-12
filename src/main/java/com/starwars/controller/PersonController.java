@@ -2,8 +2,6 @@ package com.starwars.controller;
 
 import com.starwars.model.Person;
 import com.starwars.service.PersonService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
@@ -18,16 +16,16 @@ public class PersonController {
     }
 
     @GetMapping
-    public ResponseEntity<Flux<Person.Root>> getPeople(
+    public Flux<Person.Root> getPeople(
             @RequestParam(required = false, defaultValue = "") String search,
             @RequestParam(required = false, defaultValue = "") String page
     ) {
-        return new ResponseEntity<>(personService.getPeople(search, page), HttpStatus.OK);
+        return personService.getPeople(search, page);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Flux<Person>> getPersonById(@PathVariable("id") String id) {
-        return new ResponseEntity<>(personService.getPersonById(id), HttpStatus.OK);
+    public Flux<Person> getPersonById(@PathVariable("id") String id) {
+        return personService.getPersonById(id);
     }
 }
 

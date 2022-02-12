@@ -1,7 +1,8 @@
 package com.starwars.model;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.starwars.service.BaseUrlMapper;
+import com.starwars.mapper.BaseUrlMapper;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,17 +36,20 @@ public class Starship {
     private Date created;
     private Date edited;
     private String url;
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private final BaseUrlMapper mapper = new BaseUrlMapper();
 
     public void setPilots(List<String> pilots) {
-        this.pilots = BaseUrlMapper.mapArrayToBaseUrl(pilots);
+        this.pilots = mapper.mapArrayToBaseUrl(pilots);
     }
 
     public void setFilms(List<String> films) {
-        this.films = BaseUrlMapper.mapArrayToBaseUrl(films);
+        this.films = mapper.mapArrayToBaseUrl(films);
     }
 
     public void setUrl(String url) {
-        this.url = BaseUrlMapper.mapToBaseUrl(url);
+        this.url = mapper.mapToBaseUrl(url);
     }
 
     @Getter
@@ -55,13 +59,16 @@ public class Starship {
         private String next;
         private String previous;
         private List<Starship> results;
+        @Getter(AccessLevel.NONE)
+        @Setter(AccessLevel.NONE)
+        private final BaseUrlMapper mapper = new BaseUrlMapper();
 
         public void setNext(String next) {
-            this.next = BaseUrlMapper.mapToBaseUrl(next);
+            this.next = mapper.mapToBaseUrl(next);
         }
 
         public void setPrevious(String previous) {
-            this.previous = BaseUrlMapper.mapToBaseUrl(previous);
+            this.previous = mapper.mapToBaseUrl(previous);
         }
     }
 
