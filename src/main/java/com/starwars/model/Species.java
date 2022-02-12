@@ -6,7 +6,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -29,8 +29,8 @@ public class Species {
     private String language;
     private List<String> people;
     private List<String> films;
-    private Date created;
-    private Date edited;
+    private LocalDate created;
+    private LocalDate edited;
     private String url;
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)

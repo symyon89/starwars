@@ -21,12 +21,6 @@ import static org.mockito.Mockito.doReturn;
 @ExtendWith(SpringExtension.class)
 class StarwarsApplicationTests {
 
-    @Spy
-    WebClient webClient;
-
-    @Mock
-    WebClient.Builder builder;
-
     @Test
     void contextLoads() {
 //        doReturn(webClient);

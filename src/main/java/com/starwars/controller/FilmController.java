@@ -2,10 +2,13 @@ package com.starwars.controller;
 
 import com.starwars.model.Film;
 import com.starwars.service.FilmService;
-import org.springframework.http.HttpStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Flux;
+
 
 
 @RestController

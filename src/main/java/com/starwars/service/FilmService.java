@@ -23,7 +23,7 @@ public class FilmService {
         return builder
                 .get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/filmss/")
+                        .path("/films/")
                         .queryParam("page", page)
                         .queryParam("search", search)
                         .build())

@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -30,8 +31,8 @@ public class Vehicle {
     private String vehicleClass;
     private List<String> pilots;
     private List<String> films;
-    private Date created;
-    private Date edited;
+    private LocalDate created;
+    private LocalDate edited;
     private String url;
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
