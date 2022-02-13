@@ -1,6 +1,8 @@
 package com.starwars.mapper;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BaseUrlMapperTest {
+
     BaseUrlMapper mapper = new BaseUrlMapper();
 
     @Test
@@ -15,14 +18,12 @@ class BaseUrlMapperTest {
         String toRecive = "http://localhost:8080/";
         String toSend = "https://swapi.dev/api/";
 
-
         String result = mapper.mapToBaseUrl(toSend);
 
         assertEquals(toRecive, result);
     }
     @Test
     void mapToBaseUrlTest_returns_null() {
-
         String result = mapper.mapToBaseUrl(null);
         assertNull(result);
     }
@@ -39,7 +40,6 @@ class BaseUrlMapperTest {
 
     @Test
     void mapArrayToBaseUrlTest_returns_EmptyList() {
-
         List<String> result = mapper.mapArrayToBaseUrl(null);
         assertEquals(new ArrayList<>() ,result);
     }

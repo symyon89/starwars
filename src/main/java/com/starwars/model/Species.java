@@ -1,10 +1,12 @@
 package com.starwars.model;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.starwars.config.ConfigProperties;
 import com.starwars.mapper.BaseUrlMapper;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.util.List;

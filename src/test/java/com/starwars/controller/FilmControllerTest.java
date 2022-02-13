@@ -1,5 +1,7 @@
 package com.starwars.controller;
 
+import com.fasterxml.jackson.databind.JsonSerializable;
+import com.starwars.mapper.BaseUrlMapper;
 import com.starwars.model.Film;
 import com.starwars.service.FilmService;
 import org.junit.jupiter.api.Test;
@@ -25,6 +27,7 @@ class FilmControllerTest {
 
     @Autowired
     private WebTestClient webClient;
+
 
 
     @Test
