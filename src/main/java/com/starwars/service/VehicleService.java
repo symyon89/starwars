@@ -27,8 +27,8 @@ public class VehicleService {
                         .queryParam("search", search)
                         .build())
                 .retrieve()
-                .onStatus(HttpStatus::is5xxServerError,clientResponse ->  Mono.just(new ServerException("Error 500")))
-                .onStatus(HttpStatus::is4xxClientError, clientResponse ->  Mono.just(new PageNotFoundException("Error 400")))
+                .onStatus(HttpStatus::is5xxServerError,clientResponse ->  Mono.error(new ServerException("Error 500")))
+                .onStatus(HttpStatus::is4xxClientError, clientResponse ->  Mono.error(new PageNotFoundException("Error 400")))
                 .bodyToFlux(Vehicle.Root.class);
     }
     public Flux<Vehicle> getVehicleById(String id) {
@@ -36,8 +36,8 @@ public class VehicleService {
                 .get()
                 .uri("/vehicles/" + id + "/")
                 .retrieve()
-                .onStatus(HttpStatus::is5xxServerError, clientResponse ->  Mono.just(new ServerException("Error 500")))
-                .onStatus(HttpStatus::is4xxClientError, clientResponse ->  Mono.just(new PageNotFoundException("Error 400")))
+                .onStatus(HttpStatus::is5xxServerError, clientResponse ->  Mono.error(new ServerException("Error 500")))
+                .onStatus(HttpStatus::is4xxClientError, clientResponse ->  Mono.error(new PageNotFoundException("Error 400")))
                 .bodyToFlux(Vehicle.class);
     }
 }

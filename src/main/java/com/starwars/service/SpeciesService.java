@@ -28,6 +28,8 @@ public class SpeciesService {
                         .queryParam("search", search)
                         .build())
                 .retrieve()
+                .onStatus(HttpStatus::is5xxServerError, clientResponse ->  Mono.error(new ServerException("Error 500")))
+                .onStatus(HttpStatus::is4xxClientError, clientResponse ->  Mono.error(new PageNotFoundException("Error 400")))
                 .bodyToFlux(Species.Root.class);
     }
 
@@ -36,8 +38,8 @@ public class SpeciesService {
                 .get()
                 .uri("/species/" + id + "/")
                 .retrieve()
-                .onStatus(HttpStatus::is5xxServerError, clientResponse ->  Mono.just(new ServerException("Error 500")))
-                .onStatus(HttpStatus::is4xxClientError, clientResponse ->  Mono.just(new PageNotFoundException("Error 400")))
+                .onStatus(HttpStatus::is5xxServerError, clientResponse ->  Mono.error(new ServerException("Error 500")))
+                .onStatus(HttpStatus::is4xxClientError, clientResponse ->  Mono.error(new PageNotFoundException("Error 400")))
                 .bodyToFlux(Species.class);
     }
 
